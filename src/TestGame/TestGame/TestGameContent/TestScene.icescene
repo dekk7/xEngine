@@ -1,0 +1,29 @@
+<IceScene>
+  <Assets />
+  <Components />
+  <SceneItems>
+    <TextItem name="New Scene Item 01" fontSource="EMBEDDED" fontRef="DefaultFont">
+      <Position>
+        <X>-73</X>
+        <Y>-43</Y>
+      </Position>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+      <Opacity>255</Opacity>
+      <Layer>5</Layer>
+      <Visible>True</Visible>
+      <Text>Welcome</Text>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+      </Scale>
+      <Tint>255,255,255,255</Tint>
+      <Components />
+      <LinkPoints />
+      <Mounts />
+    </TextItem>
+  </SceneItems>
+  <Templates />
+</IceScene>
