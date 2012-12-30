@@ -16,42 +16,69 @@ using xTile;
 using xTile.Dimensions;
 using xTile.Display;
 
-using IceCream;
-
 namespace TestGame
 {
 
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public class Game1 : IceCream.Game
+    public class Game1 : Microsoft.Xna.Framework.Game
     {
-        //IceScene scene;
+        GraphicsDeviceManager graphics;
+        SpriteBatch spriteBatch;
+        //public static Game Instance;
+        Map map;
+        IDisplayDevice mapDisplayDevice;
+        xTile.Dimensions.Rectangle viewport;
+
+        protected bool enableVSync = true;
+        protected bool DebugConsoleOn = true;
+
+        //test
+        Location loct;
+
+        Character _player;
+        
+
         public Game1()
         {
-            map = Content.Load<Map>("Maps\\Map01");
+            graphics = new GraphicsDeviceManager(this);
+            Content.RootDirectory = "Content";
+            IsMouseVisible = true;
+            IsFixedTimeStep = true;
+            
         }
         protected override void Initialize()
         {
             base.Initialize();
 
-            viewport = new xTile.Dimensions.Rectangle(0, 0,
-                graphics.PreferredBackBufferWidth,
-                graphics.PreferredBackBufferHeight);
+            mapDisplayDevice = new XnaDisplayDevice(this.Content, graphics.GraphicsDevice);
+
+            map.LoadTileSheets(mapDisplayDevice);
+
+            viewport = new xTile.Dimensions.Rectangle(new Size(800,600));
 
             viewport.X = 0;
-            viewport.Y = 166;
+            viewport.Y = 280;
         }
         protected override void LoadContent()
         {
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+            LoadMap("Map01");
+
+            _player = new Character(Content.Load<Texture2D>("Sprite_Sheet"), 1, 32, 48, map);
+
+            _player.Position = new Point(139, 309);//new Vector2(138, 308);
+
             base.LoadContent();
-            //scene = SceneManager.LoadScene("Content/TestScene.icescene");
-            //LoadMap("Maps\\Map01");
+           
         }
 
         protected override void UnloadContent()
         {
-
+            map.DisposeTileSheets(mapDisplayDevice);
+            map = null;
+            
             base.UnloadContent();
         }
 
@@ -62,7 +89,7 @@ namespace TestGame
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            if (keyb.IsKeyDown(Keys.A) && !(viewport.X <= 0))
+            /*if (keyb.IsKeyDown(Keys.A) && !(viewport.X <= 0))
             {
                 viewport.X--;
                 Console.WriteLine("viewport.X: {0}", viewport.X);
@@ -72,7 +99,7 @@ namespace TestGame
                 viewport.X++;
                 Console.WriteLine("viewport.X: {0}", viewport.X);
             }
-            else if (keyb.IsKeyDown(Keys.S) && !(viewport.Y >= 166))
+            else if (keyb.IsKeyDown(Keys.S) && !(viewport.Y >= 280))
             {
                 viewport.Y++;
                 Console.WriteLine("viewport.Y: {0}", viewport.Y);
@@ -81,14 +108,45 @@ namespace TestGame
             {
                 viewport.Y--;
                 Console.WriteLine("viewport.Y: {0}", viewport.Y);
+            }*/
+
+            if (keyb.IsKeyDown(Keys.B))
+            {
+                //LoadMap("Map01");
             }
+
+            if (map != null)
+                map.Update(gameTime.ElapsedGameTime.Milliseconds);
+
+
+            if (_player != null)
+                _player.HandleSpriteMovement(gameTime);
 
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
+            GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            if (map != null)
+                map.Draw(mapDisplayDevice, viewport, loct, false);
+
+
+            if (_player != null)
+            {
+                spriteBatch.Begin();
+                Vector2 correctedPosition = new Vector2(_player.Position.X + loct.X, _player.Position.Y + loct.Y);
+                spriteBatch.Draw(_player.Texture, correctedPosition, _player.SourceRect, Color.White, 0f, _player.Origin, 1.0f, SpriteEffects.None, 0);
+                spriteBatch.End();
+            }
+
             base.Draw(gameTime);
+        }
+
+        public void LoadMap(string _map)
+        {
+            map = Content.Load<Map>("Maps\\"+_map);
         }
     }
 }

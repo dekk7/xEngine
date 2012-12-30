@@ -48,7 +48,7 @@ namespace IceCream
         internal static bool activeSceneChanged = false;
         internal static GraphicsDevice graphicsDevice;
         private static List<SceneItem> _itemsToDelete = new List<SceneItem>();
-        internal static SpriteBatch _afterBatch=null;
+        public static SpriteBatch _afterBatch=null;
         #endregion
 
         #region Methods

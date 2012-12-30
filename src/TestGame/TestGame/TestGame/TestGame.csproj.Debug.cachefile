@@ -1,7 +1,13 @@
 Content\Maps\Map01.xnb
+Content\Maps\Intro.xnb
+Content\Player\SquareGuy.xnb
 Content\TileSheets\Background01.xnb
 Content\TileSheets\Background02.xnb
 Content\TileSheets\Background03.xnb
 Content\TileSheets\TileSheet01.xnb
+Content\SquareGuy.xnb
+Content\Sprite_Sheet.xnb
+Content\SquareGuy.png
+Content\Sprite_Sheet.png
 Content\global.ice
 Content\TestScene.icescene
