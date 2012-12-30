@@ -102,7 +102,6 @@ namespace IceCream
         public Game()
         {
             graphics = new GraphicsDeviceManager(this);
-            //Content = new ContentLoader(Services);
             Content.RootDirectory = "Content";
 
 			#if !REACH
@@ -149,7 +148,9 @@ namespace IceCream
                 try
                 {
                     mapDisplayDevice = new XnaDisplayDevice(this.Content, graphics.GraphicsDevice);
-                    map.LoadTileSheets(mapDisplayDevice);
+
+                    if (map != null)
+                        map.LoadTileSheets(mapDisplayDevice);
                     
                 }
                 catch (Exception exd)
@@ -413,8 +414,11 @@ namespace IceCream
         protected override void UnloadContent()
         {
             //xTile
-            map.DisposeTileSheets(mapDisplayDevice);
-            map = null;
+            if (map != null)
+            {
+                map.DisposeTileSheets(mapDisplayDevice);
+                map = null;
+            }
             //xTile end
 
             IceProfiler.StartProfiling(IceProfilerNames.GAME_UNLOADCONTENT);
@@ -443,7 +447,8 @@ namespace IceCream
             }
 
             //xTile
-            map.Update(gameTime.ElapsedGameTime.Milliseconds);
+            if( map != null )
+                map.Update(gameTime.ElapsedGameTime.Milliseconds);
             //xTile end
 
             base.Update(gameTime);
@@ -495,7 +500,8 @@ namespace IceCream
             //}
 
             //xTile
-            map.Draw(mapDisplayDevice, viewport);
+            if (map != null)
+                map.Draw(mapDisplayDevice, viewport);
             //xTile end
 
             base.Draw(gameTime);
