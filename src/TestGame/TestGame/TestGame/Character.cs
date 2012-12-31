@@ -27,15 +27,29 @@ namespace TestGame
         int spriteHeight = 48;
         int spriteSpeed = 2;
         Microsoft.Xna.Framework.Rectangle sourceRect;
-        Microsoft.Xna.Framework.Rectangle collisionBox;
         //Vector2 position;
         Point position;
         Vector2 origin;
         KeyboardState currentKBState;
         KeyboardState previousKBState;
+        KeyboardState keyState;
 
         Map _map;
         Layer collision;
+
+        private Vector2[] m_vecLeafPositions;
+        private Vector2[] m_vecLeafVelocities;
+
+
+        public Vector2[] vecLeafPositions
+        {
+            get { return m_vecLeafPositions; }
+        }
+
+        public Vector2[] vecLeafVelocities
+        {
+            get { return m_vecLeafVelocities; }
+        }
 
         public Point Position
         {
@@ -60,6 +74,10 @@ namespace TestGame
             get { return sourceRect; }
             set { sourceRect = value; }
         }
+        public Microsoft.Xna.Framework.Rectangle BoundingBox
+        {
+            get { return new Microsoft.Xna.Framework.Rectangle((int)Position.X, (int)Position.Y, spriteWidth, spriteHeight); }
+        }
 
         public Character(Texture2D texture,
             int currentFrame,
@@ -72,22 +90,23 @@ namespace TestGame
             this.spriteWidth = spriteWidth;
             this.spriteHeight = spriteHeight;
             this._map = map;
-            this.collision = map.Layers[1];
+            if (!(_map == null))
+            {
+                Console.WriteLine("_map != null");
+            }
+            this.collision = map.GetLayer("Colision");
+            //this.collision = _map.Layers[3];
+            m_vecLeafPositions = new Vector2[20];
+            m_vecLeafVelocities = new Vector2[m_vecLeafPositions.Length];
         }
-
-        /*public override void Initialize()
-        {
-
-            base.Initialize();
-        }*/
 
         public void HandleSpriteMovement(GameTime gameTime)
         {
             previousKBState = currentKBState;
             currentKBState = Keyboard.GetState();
+            keyState = currentKBState;
 
             sourceRect = new Microsoft.Xna.Framework.Rectangle(currentFrame * spriteWidth, 0, spriteWidth, spriteHeight);
-            //collisionBox = sourceRect;
 
             if (currentKBState.GetPressedKeys().Length == 0)
             {
@@ -101,59 +120,50 @@ namespace TestGame
                     currentFrame = 12;
             }
 
-            
+            Point newPos = position;
 
-
-
-            if (currentKBState.IsKeyDown(Keys.Space))
+            if (keyState.IsKeyDown(Keys.W))
             {
-                spriteSpeed = 3;
-                interval = 100;
-            }
+                newPos.Y -= 2;
+            if (!calculateCollision(newPos))
+                position.Y = newPos.Y;
             else
-            {
-                spriteSpeed = 2;
-                interval = 200;
+                newPos.Y = position.Y;
             }
 
-            if (currentKBState.IsKeyDown(Keys.Right) == true)
+            if (keyState.IsKeyDown(Keys.S))
             {
-                AnimateRight(gameTime);
-                if (position.X < 780)
-                    position.X += spriteSpeed;
+                newPos.Y += 2;
+                if (!calculateCollision(newPos))
+                    position.Y = newPos.Y;
+                else
+                    newPos.Y = position.Y;
             }
 
-            if (currentKBState.IsKeyDown(Keys.Left) == true)
+            if (keyState.IsKeyDown(Keys.A))
             {
-                AnimateLeft(gameTime);
-                if (position.X > 20)
-                    position.X -= spriteSpeed;
+                newPos.X -= 2;
+                if (!calculateCollision(newPos))
+                    position.X = newPos.X;
+                else
+                    newPos.X = position.X;
             }
 
-            /*if (currentKBState.IsKeyDown(Keys.Down) == true)
+            if (keyState.IsKeyDown(Keys.D))
             {
-                AnimateDown(gameTime);
-                if (position.Y < 575)
-                {
-                    position.Y += spriteSpeed;
-                }
+                newPos.X += 2;
+                if (!calculateCollision(newPos))
+                    position.X = newPos.X;
+                else
+                    newPos.X = position.X;
             }
-
-            if (currentKBState.IsKeyDown(Keys.Up) == true)
-            {
-                AnimateUp(gameTime);
-                if (position.Y > 25)
-                {
-                    position.Y -= spriteSpeed;
-                }
-            }*/
 
             if (currentKBState.IsKeyDown(Keys.P))
             {
                 Console.WriteLine("Position: X:{0} Y:{1}", position.X, position.Y);
             }
-
             origin = new Vector2(sourceRect.Width, sourceRect.Height / 2);
+            
         }
 
         public void AnimateRight(GameTime gameTime)
@@ -196,7 +206,6 @@ namespace TestGame
                 timer = 0f;
             }
         }
-
         public void AnimateDown(GameTime gameTime)
         {
             if (currentKBState != previousKBState)
@@ -217,7 +226,6 @@ namespace TestGame
                 timer = 0f;
             }
         }
-
         public void AnimateLeft(GameTime gameTime)
         {
             if (currentKBState != previousKBState)
@@ -241,34 +249,54 @@ namespace TestGame
 
         private bool calculateCollision(Point newPos)
         {
-            Tile tile;
-            Location tileLocation;
+            try
+            {
+                Tile tile;
+                Location tileLocation;
 
-            Console.WriteLine("cx: " + collisionBox.X + " cy: " + collisionBox.Y + "\n");
+                tileLocation = new Location((newPos.X - BoundingBox.Width / 2) / 48,
+                (newPos.Y - BoundingBox.Height / 2) / 48);
+                tile = collision.Tiles[tileLocation];
+                if (tile.TileIndex >= 1)
+                {
+                    Console.WriteLine("Collicion!!");
+                    return true;
+                }
 
-            tileLocation = new Location((newPos.X - collisionBox.Width / 2) / 64,
-                (newPos.Y - collisionBox.Height / 2) / 64);
-            tile = collision.Tiles[tileLocation];
-            if (tile.TileIndex == 0)
-                return true;
+                tileLocation = new Location((newPos.X + BoundingBox.Width / 2) / 48,
+                    (newPos.Y - BoundingBox.Height / 2) / 48);
+                tile = collision.Tiles[tileLocation];
+                if (tile.TileIndex >= 1)
+                {
+                    Console.WriteLine("Collicion!!");
+                    return true;
+                }
 
-            tileLocation = new Location((newPos.X + collisionBox.Width / 2) / 64,
-                (newPos.Y - collisionBox.Height / 2) / 64);
-            tile = collision.Tiles[tileLocation];
-            if (tile.TileIndex == 0)
-                return true;
+                tileLocation = new Location((newPos.X + BoundingBox.Width / 2) / 48,
+                    (newPos.Y + BoundingBox.Height / 2) / 48);
+                tile = collision.Tiles[tileLocation];
+                if (tile.TileIndex >= 1)
+                {
+                    Console.WriteLine("Collicion!!");
+                    return true;
+                }
 
-            tileLocation = new Location((newPos.X + collisionBox.Width / 2) / 64,
-                (newPos.Y + collisionBox.Height / 2) / 64);
-            tile = collision.Tiles[tileLocation];
-            if (tile.TileIndex == 0)
-                return true;
+                tileLocation = new Location((newPos.X - BoundingBox.Width / 2) / 48,
+                    (newPos.Y + BoundingBox.Height / 2) / 48);
+                tile = collision.Tiles[tileLocation];
 
-            tileLocation = new Location((newPos.X - collisionBox.Width / 2) / 64,
-                (newPos.Y + collisionBox.Height / 2) / 64);
-            tile = collision.Tiles[tileLocation];
-            if (tile.TileIndex == 0)
-                return true;
+                if (tile.TileIndex >= 1)
+                {
+                    Console.WriteLine("Collicion!!");
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception epx) {
+                
+                //Console.WriteLine("Error..! {0}",epx.Message);
+            }
 
             return false;
         }

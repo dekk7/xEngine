@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xTilePipeline", "TileMapEdi
 		{BF19F9E2-FD54-4B63-AF67-DA49B5EA11D9} = {BF19F9E2-FD54-4B63-AF67-DA49B5EA11D9}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Box2D.XNA - windows", "Box2D.XNA\Box2D.XNA - windows.csproj", "{22791486-E721-4511-AA4B-DA26CF5D0F2E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -114,6 +116,26 @@ Global
 		{5BAD950D-BC43-4264-83AE-78A9FCBDA27F}.XnaTouchRelease|Xbox 360.Build.0 = Release|Xbox 360
 		{5BAD950D-BC43-4264-83AE-78A9FCBDA27F}.XnaTouchRelease|Zune.ActiveCfg = Release|Zune
 		{5BAD950D-BC43-4264-83AE-78A9FCBDA27F}.XnaTouchRelease|Zune.Build.0 = Release|Zune
+		{22791486-E721-4511-AA4B-DA26CF5D0F2E}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{22791486-E721-4511-AA4B-DA26CF5D0F2E}.Debug|x86.ActiveCfg = Debug|x86
+		{22791486-E721-4511-AA4B-DA26CF5D0F2E}.Debug|x86.Build.0 = Debug|x86
+		{22791486-E721-4511-AA4B-DA26CF5D0F2E}.Debug|Xbox 360.ActiveCfg = Debug|x86
+		{22791486-E721-4511-AA4B-DA26CF5D0F2E}.Debug|Zune.ActiveCfg = Debug|x86
+		{22791486-E721-4511-AA4B-DA26CF5D0F2E}.DEMO|Any CPU.ActiveCfg = Debug|x86
+		{22791486-E721-4511-AA4B-DA26CF5D0F2E}.DEMO|x86.ActiveCfg = Debug|x86
+		{22791486-E721-4511-AA4B-DA26CF5D0F2E}.DEMO|x86.Build.0 = Debug|x86
+		{22791486-E721-4511-AA4B-DA26CF5D0F2E}.DEMO|Xbox 360.ActiveCfg = Debug|x86
+		{22791486-E721-4511-AA4B-DA26CF5D0F2E}.DEMO|Zune.ActiveCfg = Debug|x86
+		{22791486-E721-4511-AA4B-DA26CF5D0F2E}.Release|Any CPU.ActiveCfg = Release|x86
+		{22791486-E721-4511-AA4B-DA26CF5D0F2E}.Release|x86.ActiveCfg = Release|x86
+		{22791486-E721-4511-AA4B-DA26CF5D0F2E}.Release|x86.Build.0 = Release|x86
+		{22791486-E721-4511-AA4B-DA26CF5D0F2E}.Release|Xbox 360.ActiveCfg = Release|x86
+		{22791486-E721-4511-AA4B-DA26CF5D0F2E}.Release|Zune.ActiveCfg = Release|x86
+		{22791486-E721-4511-AA4B-DA26CF5D0F2E}.XnaTouchRelease|Any CPU.ActiveCfg = Release|x86
+		{22791486-E721-4511-AA4B-DA26CF5D0F2E}.XnaTouchRelease|x86.ActiveCfg = Release|x86
+		{22791486-E721-4511-AA4B-DA26CF5D0F2E}.XnaTouchRelease|x86.Build.0 = Release|x86
+		{22791486-E721-4511-AA4B-DA26CF5D0F2E}.XnaTouchRelease|Xbox 360.ActiveCfg = Release|x86
+		{22791486-E721-4511-AA4B-DA26CF5D0F2E}.XnaTouchRelease|Zune.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

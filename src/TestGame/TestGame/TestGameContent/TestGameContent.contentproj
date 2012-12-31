@@ -60,6 +60,11 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="TileSheets\16x16.png">
+      <Name>16x16</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Compile Include="TileSheets\Background01.png">
       <Name>Background01</Name>
       <Importer>TextureImporter</Importer>
@@ -91,6 +96,15 @@
       <Importer>TideImporter</Importer>
       <Processor>TideProcessor</Processor>
     </Compile>
+    <Compile Include="Maps\Map02.tide">
+      <Name>Map02</Name>
+      <Importer>TideImporter</Importer>
+      <Processor>TideProcessor</Processor>
+    </Compile>
+    <None Include="Maps\Map02.tbin">
+      <Name>Map02</Name>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="TestScene.icescene">
       <Name>TestScene</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -101,7 +115,6 @@
       <Name>SquareGuy</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -109,7 +122,20 @@
       <Name>Sprite_Sheet</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="16x16.png">
+      <Name>16x16</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="golfball.png">
+      <Name>golfball</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

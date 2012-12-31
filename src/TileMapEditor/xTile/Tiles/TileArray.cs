@@ -39,7 +39,7 @@ namespace xTile.Tiles
             {
                 if (x < 0 || x >= m_layer.LayerSize.Width
                     || y < 0 || y >= m_layer.LayerSize.Height)
-                    throw new Exception("Tile indices out of bounds");
+                    Console.WriteLine("Tile indices out of bounds");
                 return m_tiles[x, y];
             }
 

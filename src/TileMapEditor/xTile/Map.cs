@@ -66,6 +66,11 @@ namespace xTile
             get { return m_layers.AsReadOnly(); }
         }
 
+        public List<Layer> GetLayers
+        {
+            get { return m_layers; }
+        }
+
         /// <summary>
         /// TileSheet collection in the Map
         /// </summary>
@@ -360,7 +365,6 @@ namespace xTile
 
             displayDevice.EndScene();
         }
-
         #endregion
 
         #region Internal Methods

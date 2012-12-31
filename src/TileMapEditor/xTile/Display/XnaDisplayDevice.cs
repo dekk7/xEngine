@@ -115,8 +115,15 @@ namespace xTile.Display
         /// <param name="tileSheet">Tile sheet to load</param>
         public void LoadTileSheet(TileSheet tileSheet)
         {
-            Texture2D texture2D = m_contentManager.Load<Texture2D>(tileSheet.ImageSource);
-            m_tileSheetTextures[tileSheet] = texture2D;
+            try
+            {
+                Texture2D texture2D = m_contentManager.Load<Texture2D>(tileSheet.ImageSource);
+                m_tileSheetTextures[tileSheet] = texture2D;
+            }
+            catch (Exception epd)
+            {
+                Console.WriteLine(epd.Message);
+            }
         }
 
         /// <summary>
